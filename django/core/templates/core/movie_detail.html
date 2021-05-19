@@ -5,13 +5,34 @@
 {% endblock title %}
 
 {% block main %}
-    <h1>{{ object }}</h1>
-    <p class="lead">
-        {{ object.plot }}
-    </p>
+    <div class="col">
+        <h1>{{ object }}</h1>
+        <p class="lead">
+            {{ object.plot }}
+        </p>
+    </div>
+    <ul class="movie-image list-inline">
+        {% for i in object.movieimage_set.all %}
+        <li class="list-inline-item">
+            <img src="{{ i.image.url }}">
+        </li>
+        {% endfor %}
+    </ul>
+    <p>Directed by {{ object.director }}</p>
 {% endblock main %}
 
 {% block sidebar %}
+    {% if image_form %}
+        <div>
+            <h2>Upload new image</h2>
+            <form method="Post" enctype="multipart/form-data" action={% url 'core:MovieImageUpload' movie_id=object.id %}>
+                {% csrf_token %}
+                {{ image_form.as_p }}
+                <button class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+    {% endif %}
+    <hr>
     <div>
         {% if vote_form %}
             <form method="Post" action="{{ vote_form_url }}">

@@ -118,3 +118,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'core:MovieList'
 LOGIN_URL = 'user:login'
+
+MEDIA_URL = '/uploaded/'
+MEDIA_ROOT = BASE_DIR.parent / 'media_root'

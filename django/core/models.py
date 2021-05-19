@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.db.models.aggregates import Sum
 
+from uuid import uuid4
+
 
 class MovieManager(models.Manager):
     
@@ -15,6 +17,7 @@ class MovieManager(models.Manager):
         qs = self.all_with_related_persons()
         qs = qs.annotate(score=Sum('vote__value'))
         return qs
+
 
 class Movie(models.Model):
 
@@ -55,6 +58,21 @@ class Movie(models.Model):
         ordering = ('-year', 'title')
         verbose_name = 'Фильм'
         verbose_name_plural = 'Фильмы'
+
+
+def movie_directory_path_with_uuid(instance, filename):
+    return f'{instance.movie.title}/{uuid4()}.jpg'
+
+
+class MovieImage(models.Model):
+
+    image = models.ImageField(upload_to=movie_directory_path_with_uuid)
+    uploaded = models.DateTimeField(auto_now_add=True)
+    movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.movie.year} - {self.image}'
 
 
 class PersonManager(models.Manager):
