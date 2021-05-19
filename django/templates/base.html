@@ -27,14 +27,21 @@
 <body >
 <div class="mymdb-masthead">
   <div class="container">
-    <nav class="nav">
+    <nav class="navbar">
       <div class="navbar-brand">MyMDB</div>
-      <a
-        class="nav-link"
-        href="{% url 'core:MovieList' %}"
-      >
-        Movies
-      </a>
+      <div class="navbar mr-auto">
+        <a class="navbar-link" href="{% url 'core:MovieList' %}"> Movies </a>
+      </div>
+      <div class="navbar ml-auto">
+        {% if request.user.is_authenticated %}
+        <a class="navbar-link" href="{% url 'user:logout' %}"> Log out </a>
+        {% else %}
+        <div class="navbar-item">
+          <a class="navbar-link" href="{% url 'user:login' %}"> Login </a>
+          <a class="navbar-link" href="{% url 'user:register' %}"> Register </a>
+        </div>
+        {% endif %} 
+      </div>
     </nav>
   </div>
 </div>
