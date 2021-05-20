@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-tnk25%^_@d81e(6!ekqzedx@p8z$5o1^d1)z-t6s4k882spz@z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -30,9 +30,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #3th apps
+    'debug_toolbar',
+
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -43,6 +47,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default-locmemcache',
+        'TIMEOUT': 15,
+    }
+}
 
 TEMPLATES = [
     {
@@ -121,3 +133,9 @@ LOGIN_URL = 'user:login'
 
 MEDIA_URL = '/uploaded/'
 MEDIA_ROOT = BASE_DIR.parent / 'media_root'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+CSRF_USE_SESSIONS = True
