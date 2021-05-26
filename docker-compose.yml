@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    db:
+        build: docker/psql
+        restart: always
+        ports: 
+            - "5432:5432"
+        env_file: .env
+
+    web:
+        build: .
+        restart: always
+        ports:
+            - 8000:8000
+        depends_on:
+            - db
+        env_file: .env
+
+    proxy:
+        build: nginx/
+        ports:
+            - 8080:8080
+        depends_on:
+            - web
+        restart: always
+

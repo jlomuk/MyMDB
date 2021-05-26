@@ -1,22 +1,14 @@
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+DEBUG = False
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tnk25%^_@d81e(6!ekqzedx@p8z$5o1^d1)z-t6s4k882spz@z'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
-
-
-# Application definition
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     #my app
@@ -30,8 +22,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #3th apps
-    'debug_toolbar',
 
 ]
 
@@ -47,14 +37,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'default-locmemcache',
-        'TIMEOUT': 15,
-    }
-}
 
 TEMPLATES = [
     {
@@ -74,24 +56,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mymdb',
-        'USER': 'mymdb',
-        'PASSWORD': 'development',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -108,10 +77,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
-
 LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Moscow'
@@ -122,20 +87,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-STATIC_URL = '/static/'
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'core:MovieList'
 LOGIN_URL = 'user:login'
 
-MEDIA_URL = '/uploaded/'
-MEDIA_ROOT = BASE_DIR.parent / 'media_root'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static_root'
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+MEDIA_URL = '/uploaded/'
+MEDIA_ROOT = BASE_DIR / 'media_root'
 
 CSRF_USE_SESSIONS = True
